@@ -15,7 +15,7 @@ def choose_file():
     return file
 
 def get_users(query,selector):
-    all_users = filedownloader.find_users(query,selector)
+    all_users = filedownloader.find_users(query,selector).sort([("age",pymongo.ASCENDING)])
     return all_users
 
 def update_age(all_users):
@@ -35,7 +35,7 @@ def download_file():
     selector = {"first":1,"last":1,"age":1,"dod":1,"gender":1,"hair_colour":1,"occupation":1,"nationality":1,"_id":1}
     all_users = get_users(query,selector)
     
-def update_file():
+def update_file(all_users):
     update_age(all_users)
     print "\nUpdated\n"
     
@@ -60,9 +60,11 @@ if __name__ == '__main__':
         if update == "Y":
             query = {}
             selector = {"first":1,"last":1,"age":1,"dod":1,"gender":1,"hair_colour":1,"occupation":1,"nationality":1,"_id":0}
+            selector1 = {"first":1,"last":1,"age":1,"dod":1,"gender":1,"hair_colour":1,"occupation":1,"nationality":1,"_id":1}
             users = get_users(query,selector)
+            all_users = get_users(query,selector1)
             update_age(all_users)
-            update_file(users)
+            update_file(all_users)
             create_file(users)
             
         elif update == "N":
