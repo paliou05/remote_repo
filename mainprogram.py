@@ -5,8 +5,8 @@ from txt2db import FileUploader
 from random import randint
 
 
-def choose_file():
-    directory = input("Type your file's directory:")
+def choose_file():#user gives directory and file name(while all .txt file printed)
+    directory = input("Type your file's directory:")#and returns directory and file name in a file att
     for file in os.listdir(directory):
         if file.endswith(".txt"):
             print(file)
@@ -14,11 +14,11 @@ def choose_file():
     file = directory+file_name
     return file
 
-def get_users(query,selector):
-    all_users = filedownloader.find_users(query,selector)
+def get_users(query,selector):#it returns the dict selected by selector in a ascending form by age
+    all_users = filedownloader.find_users(query,selector).sort([("age",pymongo.ASCENDING)])
     return all_users
 
-def update_age():
+def update_age():#set a random age in every user in our dictionary
     for user in all_users:
         user_id = user["_id"]
         query0 = {"_id": user_id}
@@ -40,7 +40,7 @@ if __name__ == '__main__':
         filedownloader.print_db()
         query = {}
         selector = {"first":1,"last":1,"age":1,"dod":1,"gender":1,"hair_colour":1,"occupation":1,"nationality":1,"_id":1}
-        all_users = get_users(query,selector)
+        all_users = get_users(query,selector,)
         
         update = input("Want to update age?Y/N\n")
     
