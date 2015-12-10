@@ -25,16 +25,16 @@ def update_age(all_users):#set a random age in every user in our dictionary
         selector0 = {"$set" : {"age" : randint(80,90)}}
         filedownloader.update_value(query0,selector0,False,False)
 
-def upload_file():
+def upload_file():#uploads our .txt dict to database
     file = choose_file()
     fileuploader.txt_read(file+'.txt')
     
-def download_file(all_users,query,selector): 
+def download_file(all_users,query,selector): #returns the users
     filedownloader.print_db()
     users = get_users(query,selector,)
     return users
 
-def make_file(users):
+def make_file(users):#makes a file with the name and directory user gave us
     file = choose_file()
     filedownloader.create_file(users,file+'.txt')
     
@@ -46,8 +46,6 @@ if __name__ == '__main__':
     if option == 1:
         fileuploader = FileUploader()
         upload_file()
-        #file = choose_file()
-        #fileuploader.txt_read(file+'.txt')
         
     elif option == 2:
         filedownloader = FileDownloader()
@@ -55,11 +53,7 @@ if __name__ == '__main__':
         selector = {"first":1,"last":1,"age":1,"dod":1,"gender":1,"hair_colour":1,"occupation":1,"nationality":1,"_id":1}
         all_users = get_users(query,selector,)
         download_file(all_users,query,selector)
-        ##filedownloader.print_db()
-        #query = {}
-        #selector = {"first":1,"last":1,"age":1,"dod":1,"gender":1,"hair_colour":1,"occupation":1,"nationality":1,"_id":1}
-        
-        
+
         update = input("Want to update age?Y/N\n")
     
         if update == "Y":
@@ -69,13 +63,9 @@ if __name__ == '__main__':
             selector = {"first":1,"last":1,"age":1,"dod":1,"gender":1,"hair_colour":1,"occupation":1,"nationality":1,"_id":0}
             users = get_users(query,selector)
             make_file(users)
-            #file = choose_file()
-            #filedownloader.create_file(all_users,file+'.txt')
             
         elif update == "N":
             make_file(all_users)
-            #file = choose_file()
-            #filedownloader.create_file(all_users,file+'.txt')
             
         else:
             exit()
