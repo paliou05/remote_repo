@@ -5,6 +5,40 @@ from txt2db import FileUploader
 from random import randint
 
 
+def main():
+    option = input("1.To upload your database press 1\n2.To download your database press 2\n")
+    
+    if option == 1:
+        upload_file()
+        
+    elif option == 2:
+        download_file()
+        
+        update = input("Want to update age?Y/N\n")
+    
+        if update == "Y":
+            query = {}
+            selector = {"first":1,"last":1,"age":1,"dod":1,"gender":1,"hair_colour":1,"occupation":1,"nationality":1,"_id":0}
+            selector1 = {"first":1,"last":1,"age":1,"dod":1,"gender":1,"hair_colour":1,"occupation":1,"nationality":1,"_id":1}
+            users = get_users(query,selector)
+            all_users = get_users(query,selector1)
+            update_age(all_users)
+            update_file(all_users)
+            create_file(users)
+            
+        elif update == "N":
+            query = {}
+            selector = {"first":1,"last":1,"age":1,"dod":1,"gender":1,"hair_colour":1,"occupation":1,"nationality":1,"_id":0}
+            users = get_users(query,selector)
+            create_file(users)
+            
+        else:
+            exit()
+
+    else:
+        print "wrong option"
+        exit()
+
 def choose_file():
     directory = input("Type your file's directory:")
     for file in os.listdir(directory):
@@ -44,39 +78,6 @@ def create_file(users):
     filedownloader.create_file(users,file+'.txt')
 
 if __name__ == '__main__':
-    
-    option = input("1.To upload your database press 1\n2.To download your database press 2\n")
-    
-    if option == 1:
-        fileuploader = FileUploader()
-        upload_file()
-        
-    elif option == 2:
-        filedownloader = FileDownloader()
-        download_file()
-        
-        update = input("Want to update age?Y/N\n")
-    
-        if update == "Y":
-            query = {}
-            selector = {"first":1,"last":1,"age":1,"dod":1,"gender":1,"hair_colour":1,"occupation":1,"nationality":1,"_id":0}
-            selector1 = {"first":1,"last":1,"age":1,"dod":1,"gender":1,"hair_colour":1,"occupation":1,"nationality":1,"_id":1}
-            users = get_users(query,selector)
-            all_users = get_users(query,selector1)
-            update_age(all_users)
-            update_file(all_users)
-            create_file(users)
-            
-        elif update == "N":
-            query = {}
-            selector = {"first":1,"last":1,"age":1,"dod":1,"gender":1,"hair_colour":1,"occupation":1,"nationality":1,"_id":0}
-            users = get_users(query,selector)
-            create_file(users)
-            
-        else:
-            exit()
-
-    else:
-        print "wrong option"
-        exit()
-        
+    fileuploader = FileUploader()
+    filedownloader = FileDownloader()
+    main()
